@@ -1,13 +1,19 @@
-chrome.extension.sendMessage({}, function(response) {
-	var readyStateCheckInterval = setInterval(function() {
-	if (document.readyState === "complete") {
-		clearInterval(readyStateCheckInterval);
+$(document).ready(function() {
+  var d1 = new Date(Date.parse($(".last-modified").text()));
+  var d1Y = d1.getFullYear();
+  var d2 = new Date(Date.now());
+  var d2Y = d2.getFullYear();
+  var d1M = d1.getMonth();
+  var d2M = d2.getMonth();
 
-		// ----------------------------------------------------------
-		// This part of the script triggers when page is done loading
-		console.log("Hello. This message was sent from scripts/inject.js");
-		// ----------------------------------------------------------
+  var diff_mon = (d2M+12*d2Y)-(d1M+12*d1Y);
 
-	}
-	}, 10);
+  if (diff_mon > 12) {
+    $(".last-modified").css( "color", "red");
+    $(".last-modified").css( "background-color", "yellow");
+  } else if (diff_mon > 6) {      
+    $(".last-modified").css( "color", "red");
+  } else {      
+    $(".last-modified").css( "color", "green");
+  } 
 });
